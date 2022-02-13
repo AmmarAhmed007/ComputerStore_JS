@@ -6,7 +6,11 @@ const bankButtonElement = document.querySelector('#bankButton');
 const payLoanButtonElement = document.getElementById("payLoanButton");
 const computersSelectElement = document.getElementById("computersSelect");
 const computersSpecElement = document.getElementById("computerSpec");
+
 const imageElement = document.getElementById("image")
+const titleElement = document.getElementById("title");
+const descriptionElement = document.getElementById("description");
+const amountElement = document.getElementById("amount");
 
 let computers = [];
 let computerSpecs = [];
@@ -86,7 +90,12 @@ computersSelectElement.addEventListener('change', e => {
 });
 
 function displayComputers(computer) {
+
     imageElement.src = `${url}/${computer.image}`;
+    titleElement.innerHTML = computer.title;
+    descriptionElement.innerHTML = computer.description;
+    amountElement.innerHTML = computer.price + " kr";
+    
 
 
 }
