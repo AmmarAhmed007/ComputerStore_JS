@@ -1,0 +1,97 @@
+.bankBox, .workBox, .computerBox {
+    width: 25%;
+    height: 40%;
+    margin: 10px;
+    text-align: center;
+}
+
+.headerBox {
+    font-size: larger;
+    font-weight: bold;
+}
+
+
+.loanButton {
+    background-color: green;
+    align-content: center;
+}
+
+.container {
+    display: inline-block;
+    padding: 4px;
+    width: 95%;
+    height: 60%;
+    text-align: center;
+    margin-left: 30px;
+}
+
+div {
+    display: inline-block;
+}
+
+.computerspec {
+    height: 50%;
+}
+
+.grid-container {
+    display: grid;
+    grid-gap: 7px;
+    background-color: black;
+    padding: 7px;
+    width: 25%;
+    float:left;
+    margin-right: 5%;
+}
+
+.grid-item {
+    /* text-align: center; */
+    padding: 10px;
+    font-size: 15px;
+}
+
+.header {
+    grid-column: 1 / span 2;
+    grid-row : 1;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.button {
+    grid-column : 1 / span 2;
+    grid-row : 3;
+}
+
+.work {
+    position: relative;
+}
+
+.selecter {
+    grid-column: 1 / span 2;
+    grid-row : 2;
+}
+
+.feature {
+    grid-column: 1;
+    grid-row: 3;
+}
+
+.images {
+    grid-column: 1;
+}
+
+.text-computer {
+    grid-column: 2;
+} 
+
+.belop {
+    grid-column: 3;
+}
+
+.grid-container-computer {
+    display: grid;
+    grid-gap: 7px;
+    padding: 7px;
+    width: 75%;
+    float:left;
+    margin-right: 5%;
+}
