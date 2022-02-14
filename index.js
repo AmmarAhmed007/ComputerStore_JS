@@ -6,6 +6,7 @@ const bankButtonElement = document.querySelector('#bankButton');
 const payLoanButtonElement = document.getElementById("payLoanButton");
 const computersSelectElement = document.getElementById("computersSelect");
 const computersSpecElement = document.getElementById("computerSpec");
+const buyBtnElement = document.getElementById("buyBtn");
 
 const imageElement = document.getElementById("image")
 const titleElement = document.getElementById("title");
@@ -17,19 +18,18 @@ let computerSpecs = [];
 const url = "https://noroff-komputer-store-api.herokuapp.com";
 let hasLoan = false;
 let computersBought;
-let displayComputers;
+let displayLaptops;
 
 (async function() {
     try {
         const res = await fetch(`${url}/computers`);
         const json = await res.json();
-        displayComputers = [...json];
+        displayLaptops = [...json];
     } catch(err) {
         console.log(err);
     }
-        //add and display
-    addComputersToSelect();
-    displayComputers(displayComputers[0]);
+     addComputersToSelect();
+    //displayComputers(displayComputers[0]);
 })();
 
 workButtonElement.addEventListener('click', e => {
@@ -47,7 +47,7 @@ bankButtonElement.addEventListener('click', e => {
 //get a loan
 getLoanButtonElement.addEventListener('click', e => {
     if(hasLoan) {
-        alert("You already have a loan! Are you stupid?")
+        alert("You already have a loan! You need to pay it back first.")
         return;
     }
 
@@ -78,15 +78,16 @@ payLoanButtonElement.addEventListener('click', e => {
         return;
     } else {
         bankAmountElement.innerHTML = balance - loan + " kr";
-        hasLoan = true;
+        hasLoan = false;
         alert("You have payed back your loan of " + loan);
+        
     }
 });
 
 computersSelectElement.addEventListener('change', e => {
-    const computer = displayComputers.find(computer => computer.title === e.target.value);
+    const computer = displayLaptops.find(computer => computer.title === e.target.value);
     displayComputers(computer);
-    console.log(computer);
+    console.log(computer.title + " | " + e.target.value);
 });
 
 function displayComputers(computer) {
@@ -95,18 +96,30 @@ function displayComputers(computer) {
     titleElement.innerHTML = computer.title;
     descriptionElement.innerHTML = computer.description;
     amountElement.innerHTML = computer.price + " kr";
-    
-
+    computersSpecElement.innerHTML = computer.specs;
+    console.log(computer.title);
 
 }
 
 function addComputersToSelect() {
-    for (const computer of displayComputers) {
+    for (const computer of displayLaptops) {
         const computerSelect = document.createElement('option');
         console.log(computer.title);
         computerSelect.text = computer.title;
         computersSelectElement.append(computerSelect);
+        console.log(computer.title);
     }
 }
 
+buyBtnElement.addEventListener('click', e => {
+    const bankAmount = Number.parseInt(bankAmountElement.innerHTML);
+    const price = Number.parseInt(amountElement.innerHTML);
+    if(bankAmount < price) {
+        alert("You need more money. Go work some more! :)")
+        return;
+    } else {
+        alert("Congrats! You are the lucky owner of a new computer");
+        bankAmountElement.innerHTML = bankAmount - price + " kr";
+    }
+});
 
