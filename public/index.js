@@ -7,6 +7,7 @@ const payLoanButtonElement = document.getElementById("payLoanButton");
 const computersSelectElement = document.getElementById("computersSelect");
 const computersSpecElement = document.getElementById("computerSpec");
 const buyBtnElement = document.getElementById("buyBtn");
+const loanBalanceElement = document.getElementById("loanBalance");
 
 const imageElement = document.getElementById("image")
 const titleElement = document.getElementById("title");
@@ -28,8 +29,8 @@ let displayLaptops;
     } catch(err) {
         console.log(err);
     }
-     addComputersToSelect();
-    //displayComputers(displayComputers[0]);
+    addComputersToSelect();
+    displayComputers(displayComputers[0]);
 })();
 
 workButtonElement.addEventListener('click', e => {
@@ -39,10 +40,32 @@ workButtonElement.addEventListener('click', e => {
 
 bankButtonElement.addEventListener('click', e => {
     const bankBalance = Number.parseInt(bankAmountElement.innerHTML);
-    const workBalance = Number.parseInt(workBalanceElement.innerHTML);
+    let workBalance = Number.parseInt(workBalanceElement.innerHTML);
+    // const loanBalance = Number.parseInt(loanBalanceElement.innerHTML);   
+
+    if(hasLoan) {
+        const amount = workBalance * 0.1;
+        payBackLoan(amount)
+        workBalance = workBalance * 0.9;
+    }
     bankAmountElement.innerHTML = bankBalance + workBalance + " kr";
     workBalanceElement.innerHTML = 0 + " kr";
 })
+
+function payBackLoan(amount) {
+    const loanBalance = Number.parseInt(loanBalanceElement.innerHTML);
+    const bankAmount = Number.parseInt(bankAmountElement.innerHTML);
+
+    loanBalanceElement.innerHTML = loanBalance - amount + " kr";
+    bankAmountElement.innerHTML = bankAmount - amount + " kr";
+
+    if(amount >= loanBalance) {
+        const remaining = amount - loanBalance;
+        bankAmountElement.innerHTML = remaining + bankAmount + " kr";
+        hasLoan = false;
+        loanBalanceElement.innerHTML = "";
+    }
+} 
 
 //get a loan
 getLoanButtonElement.addEventListener('click', e => {
@@ -55,11 +78,13 @@ const balance = Number.parseInt(bankAmountElement.innerHTML);
 const loan = Number(window.prompt("How much would like to loan?", ""));
 
 if(loan > balance * 2) {
-    alert("You're poor. You need more money to receive a loan.")
+    alert("You can not get a loan more than the double of your bank balance")
 } else {
     bankAmountElement.innerHTML = balance + loan + " kr";
     hasLoan = true;
+    loanBalanceElement.innerHTML = loan + " kr";
     alert("You have received a loan of " + loan + " kr. The amount has been added to your bank balance");
+    showPayLoanBtn();
 }
 });
 
@@ -71,15 +96,18 @@ payLoanButtonElement.addEventListener('click', e => {
     } 
 
     const balance = Number.parseInt(bankAmountElement.innerHTML);
+    const loanBalance = Number.parseInt(loanBalanceElement.innerHTML);
     const loan = Number(window.prompt("How much would you like to return?", ""));
 
     if(loan > balance * 2) {
-        alert("You're poor. You need more money to receive a loan.")
+        alert("You can not get a loan more than the double of your bank balance")
         return;
     } else {
         bankAmountElement.innerHTML = balance - loan + " kr";
+        loanBalanceElement.innerHTML = loanBalance - loan + " kr";
         hasLoan = false;
         alert("You have payed back your loan of " + loan);
+        // showPayLoanBtn();
         
     }
 });
@@ -120,6 +148,15 @@ buyBtnElement.addEventListener('click', e => {
     } else {
         alert("Congrats! You are the lucky owner of a new computer");
         bankAmountElement.innerHTML = bankAmount - price + " kr";
+        
     }
 });
+
+function showPayLoanBtn() {
+    if(hasLoan) {
+        payLoanButtonElement.style.display = "inline-block"
+    } else {
+        payLoanButtonElement.style.display = none;
+    }
+}
 

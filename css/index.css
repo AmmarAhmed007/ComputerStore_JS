@@ -44,9 +44,9 @@ div {
 }
 
 .grid-item {
-    /* text-align: center; */
     padding: 10px;
     font-size: 15px;
+    text-align: center;
 }
 
 .header {
@@ -54,11 +54,6 @@ div {
     grid-row : 1;
     font-size: 20px;
     font-weight: bold;
-}
-
-.button {
-    grid-column : 1 / span 2;
-    grid-row : 3;
 }
 
 .work {
@@ -94,4 +89,24 @@ div {
     width: 75%;
     float:left;
     margin-right: 5%;
+}
+
+.amount {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+.loanAmount {
+    grid-column: 2;
+    grid-row : 3;
+}
+
+.bankButton {
+    grid-column: 1 / span 2;
+    grid-row: 4;
+}
+
+.workButton, .pay {
+    grid-column: 1 / span 2;
+    grid-row : 3;
 }
